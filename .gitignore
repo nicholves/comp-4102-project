@@ -8,3 +8,27 @@ htmlcov/
 docs/_build/
 dist/
 nls/
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/nls-client/node_modules
+/nls-client/.pnp
+/nls-client/.pnp.js
+
+# testing
+/nls-client/coverage
+
+# production
+/nls-client/build
+
+# misc
+/nls-client/.DS_Store
+/nls-client/.env.local
+/nls-client/.env.development.local
+/nls-client/.env.test.local
+/nls-client/.env.production.local
+
+/nls-client/npm-debug.log*
+/nls-client/yarn-debug.log*
+/nls-client/yarn-error.log*
