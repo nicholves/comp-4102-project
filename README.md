@@ -1,5 +1,10 @@
 # comp-4102-project
 
+To setup some things either run the setup.ps1 script or setup.sh
+```bash
+./setup.ps1
+```
+
 To run flask server you can use
 ```bash
 flask --debug run
