@@ -5,8 +5,6 @@ from skimage import io
 
 import imageProcess
 
-
-
 app = Flask(__name__)
 CORS(app)
 app.config['MAX_CONTENT_LENGTH'] = 25 * 1000 * 1000
@@ -21,7 +19,6 @@ def allowed_file(filename):
 def upload():
     
     # check if the post request has the image
-    print(request.files)
     if 'image' not in request.files:
         return "Image with name 'image' not included", 400
     file = request.files['image']
@@ -37,6 +34,9 @@ def upload():
     
     if not success:
         return "Nutrition Label Invalid", 400
+    
+    if nutrition_label is None:
+        return "Nutrition Label Not Found", 200
     
     # set response content type to json
     response = app.response_class(

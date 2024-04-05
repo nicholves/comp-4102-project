@@ -3,10 +3,6 @@ import pytesseract
 import numpy as np
 import math
 
-labelImage = cv2.imread('rotation3.jpg')
-
-
-
 # This function fixes rotations in an image, it should be able to correct most angles somewhat although if
 # an image is completly flipped sideways or upside down it will correct that
 # used code/instructions from https://www.dynamsoft.com/codepool/deskew-scanned-document.html and 
@@ -50,7 +46,7 @@ def rotateImageHough(label):
         height = label.shape[0]
         width = label.shape[1]
         m = cv2.getRotationMatrix2D((width / 2, height / 2), median, 1)
-        deskewed = cv2.warpAffine(labelImage, m, (width, height), borderValue=(255,255,255))
+        deskewed = cv2.warpAffine(label, m, (width, height), borderValue=(255,255,255))
 
         return deskewed
 
@@ -65,34 +61,24 @@ def displayImage(image):
 # Then turns it into a binary image, then blurs with gaussian
 
 def preProcess(label):
-
-        rotatedTestImg = rotateImageHough(label)
-        greyImg = cv2.cvtColor(rotatedTestImg, cv2.COLOR_BGR2GRAY)
-        binaryImg = cv2.threshold(greyImg, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-        blurredImg = cv2.GaussianBlur(binaryImg, (3, 3), 0)
-
-
         
-        resizeRatio = (480 / len(label))
-        width = int(resizeRatio * len(label[0]))
-        finalImg = cv2.resize(blurredImg, (width, 480))
+        greyImg = cv2.cvtColor(label, cv2.COLOR_BGR2GRAY)
+        # blurredImg = cv2.GaussianBlur(greyImg, (5, 5), 0)
+        # displayImage(blurredImg)
+        binaryImg = cv2.threshold(greyImg, 200, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+        
+        # width, height = label.shape[:2]
+        # resizeRatio = (480 / len(label))
+        # width = int(resizeRatio * len(label[0]))
+        # finalImg = cv2.resize(blurredImg, (width, 480))
 
-        return finalImg
+        return binaryImg
 
 
 
 # calls the preprocessing then displays the image and returns the text
-
 def extractText(label):
-        processedImg = preProcess(label)
-        displayImage(processedImg)
-        imageText = pytesseract.image_to_string(processedImg)
-        return imageText
-
-        #imageText = imageText.splitlines()
-        #print(imageText)
-
-
-print(extractText(labelImage))
+        nl_processed = pytesseract.image_to_string(preProcess(label), lang='eng')
+        return nl_processed
 
 

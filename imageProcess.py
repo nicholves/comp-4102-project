@@ -2,69 +2,77 @@ import numpy as np
 import matplotlib.pyplot as plt # plotting
 import matplotlib.image as mpimg # reading images
 from skimage.color import rgb2gray # converting rgb images to grayscale
+import torch
+import cv2
 
-class SpecialNutrients:
-    def __init__(self, vitamin_d, calcium, iron, potassium):
-        self.vitamin_d = vitamin_d
-        self.calcium = calcium
-        self.iron = iron
-        self.potassium = potassium
+import OCR.fullocr as fullocr
+import labelparser as lp
 
-    def __str__(self):
-        return f"Special Nutrients:\nVitamin D: {self.vitamin_d}\nCalcium: {self.calcium}\nIron: {self.iron}\nPotassium: {self.potassium}"
 
-class NutritionLabel ():   
-    def __init__(self, servings_per_container, serving_size, calories, total_fat, saturated_fat, trans_fat, cholesterol, sodium, total_sugars, total_carbs, dietary_fiber, protein, vitamin_d, calcium, iron, potassium):
-        self.servings_per_container = servings_per_container
-        self.serving_size = serving_size
-        self.calories = calories
-        self.total_fat = total_fat
-        self.saturated_fat = saturated_fat
-        self.trans_fat = trans_fat
-        self.cholesterol = cholesterol
-        self.sodium = sodium
-        self.total_carbs = total_carbs
-        self.dietary_fiber = dietary_fiber
-        self.total_sugars = total_sugars
-        self.protein = protein
-        self.special_nutrients = SpecialNutrients(vitamin_d, calcium, iron, potassium)
-    
-    def toDict(self):
-        return {
-            "servings_per_container": self.servings_per_container,
-            "serving_size": self.serving_size,
-            "calories": self.calories,
-            "total_fat": self.total_fat,
-            "saturated_fat": self.saturated_fat,
-            "trans_fat": self.trans_fat,
-            "cholesterol": self.cholesterol,
-            "sodium": self.sodium,
-            "total_carbs": self.total_carbs,
-            "dietary_fiber": self.dietary_fiber,
-            "total_sugars": self.total_sugars,
-            "protein": self.protein,
-            "special_nutrients": {
-                "vitamin_d": self.special_nutrients.vitamin_d,
-                "calcium": self.special_nutrients.calcium,
-                "iron": self.special_nutrients.iron,
-                "potassium": self.special_nutrients.potassium
-            }
-        }
+def loadModel():
+    model_path = 'models/exp5/weights/best.pt'
+    model = torch.hub.load('yolov5', 'custom', path=model_path, source='local')    
+    return model
+
+model = loadModel()
+
+def runModel(image):
+    try:
+        results = model(image)
+
+        # Check if there are any results
+        if results.pred[0] is None:
+            return None, False
+
+        # Get the first result and 
+        crop = cropImage(image, results.crop(save=False)[0])
+        if crop is None:
+            return None, False
+        
+        return crop, True
+    except Exception as e:
+        # Handle any potential errors
+        print(f"An error occurred: {e}")
+        return None, False
+
+def cropImage(image, crop):
+    try:
+        # Get the bounding box of the crop
+        x1, y1, x2, y2 = crop['box']
+        
+        # convert to integers
+        x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+        
+        # Crop the image
+        cropped_image = image[y1:y2, x1:x2]
+        
+        return cropped_image
+    except Exception as e:
+        # Handle any potential errors
+        print(f"An error occurred: {e}")
+        return None
 
 
 def processImage(image):
-    # convert to grayscale
-    image = rgb2gray(image)
-    
-    # TODO: Do image preprocessing here
-    
-    # TODO: Find nutrition label in image with ml model
-    
-    # TODO: Use OCR to extract text from nutrition label
-    
-    # TODO: Parse text to get nutrition label values
-    
-    # Temporary code to test Nutrition Label JSON object
-    nutrition_label = NutritionLabel("1", "1 cup", "100", "10g", "5g", "0g", "0mg", "0mg", "10g", "20g", "5g", "5g", "1000IU", "1000mg", "10mg", "100mg")
+    try:  
+        # Rotate image if necessary
+        rotated = fullocr.rotateImageHough(image)
+        fullocr.displayImage(rotated)
+        
+        # Run model on rotated and original image and return the better one
+        output, success = runModel(rotated)
+        if not success:
+            output, success = runModel(image)
+            if not success:
+                return None, False
+        
+        # Use OCR to extract text from nutrition label
+        nl_processed = fullocr.extractText(output)
+        
+        # parse both nutrition label and processed nutrition label and return better one
+        label = lp.parseNutritionLabel(nl_processed)
 
-    return nutrition_label, True
+        return label, True
+    except Exception as e:
+        print(e)
+        return None, False
