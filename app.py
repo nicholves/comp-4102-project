@@ -17,10 +17,11 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # POST request to upload image
-@app.route('/', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload():
     
     # check if the post request has the image
+    print(request.files)
     if 'image' not in request.files:
         return "Image with name 'image' not included", 400
     file = request.files['image']

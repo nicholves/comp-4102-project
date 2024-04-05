@@ -1,31 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, Image, View, Button, Alert } from 'react-native';
+import { StyleSheet, Text, Image, View, Button, StatusBar, SafeAreaView } from 'react-native';
 import PhotoView from './views/PhotoView'; // Import the PhotoView component
-import axios from 'axios';
+import NLView from './views/NLView'; // Import the NLView component
+import React, { useState} from 'react';
 
 const App = () => {
-  const fetchNutritionFacts = async () => {
-    try {
-      const response = await axios.get('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=apple');
-      // Process response and store data as needed
-      console.log(response.data);
-      Alert.alert('Nutrition Facts', 'Data fetched successfully!');
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      Alert.alert('Error', 'Failed to fetch data');
-    }
-  };
+  const [currentView, setCurrentView] = useState('PhotoView');
+
+  const handleViewChange = (view) => {
+    setCurrentView(view);
+  }
 
   return (
-    <View style={{ flex: 1 }}>
-      {/* Your main content */}
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Button title="Fetch Nutrition Facts" onPress={fetchNutritionFacts} />
-      </View>
+    // <View style={{ flex: 1}}>
+    //   {/* Your main content */}
+    //   <View style={{ flex: 0.5, justifyContent:'center', alignItems: 'center' }}>
+    //     <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20 }}>Nutrition App</Text>
+    //   </View>
 
-      {/* PhotoView component */}
-      <PhotoView />
-    </View>
+    //   {/* Navigation buttons */}
+    //   <View style={{ flex: 2, alignItems: 'center' }}>
+    //     <Button title="Photo View" onPress={() => handleViewChange('PhotoView')} />
+    //     <Button title="NL View" onPress={() => handleViewChange('NLView')} />
+
+    //     {/* Conditional rendering */}
+    //     {currentView === 'PhotoView' && <PhotoView />}
+    //     {currentView === 'NLView' && <NLView />}
+    //   </View>
+    // </View>
+    // Convert to safe area view with status bar
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" />
+      <View style={{ justifyContent: 'top', alignItems: 'center' }}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20 }}>Nutrition App</Text>
+      </View>
+      <View style={{ flex: 1, alignItems: 'center' }}>
+        <Button title="Photo View" onPress={() => handleViewChange('PhotoView')} />
+        <Button title="NL View" onPress={() => handleViewChange('NLView')} />
+        {currentView === 'PhotoView' && <PhotoView />}
+        {currentView === 'NLView' && <NLView />}
+      </View>
+    </SafeAreaView>
   );
 };
 

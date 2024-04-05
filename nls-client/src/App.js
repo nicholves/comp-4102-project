@@ -21,7 +21,7 @@ function App() {
     formData.append('image', file);
     console.log(formData);
 
-    fetch('http://localhost:5000', {
+    fetch('http://localhost:5000/upload', {
       method: 'POST',
       body: formData
     })
