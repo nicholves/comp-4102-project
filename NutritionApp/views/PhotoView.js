@@ -83,8 +83,20 @@ const PhotoView = () => {
     };
 
     try {
-      const response = await axios.post('https://fbfc-134-117-249-17.ngrok-free.app/upload', formData, config);
+      const response = await axios.post('https://a7fb-174-115-203-162.ngrok-free.app/upload', formData, config);
       
+      // check if response is valid
+      if (response.status !== 200) {
+        console.error('Error fetching nutrition facts:', response);
+        Alert.alert('Error', 'Failed to get nutrition facts');
+        return;
+      }
+
+      if (response.data.error) {
+        Alert.alert('Error', response.data.error);
+        return;
+      }
+
       // Add label to storage
       let label = response.data;
       label['date'] = new Date().valueOf(); 
@@ -100,7 +112,7 @@ const PhotoView = () => {
     <View style={{justifyContent: 'center', alignItems: 'center' }}>
       {/* Display the Image they Uploaded */}
       <Image 
-        style={{ width: 200, height: 300 }}
+        style={{ width: 350, height: 350*1.5, marginBottom: 10 }}
         source={image ? { uri: image } : placeholder}
       />
       <View style={{ flexDirection: 'row', marginBottom: 10}}>

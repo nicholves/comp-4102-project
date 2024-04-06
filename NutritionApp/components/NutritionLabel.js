@@ -22,13 +22,27 @@ const NutritionLabel = ({ label, onRemove }) => {
     },
   });
 
+  // Create a new Date object using the timestamp
+  var date = new Date(label.date);
+
+  // Now, you can access various components of the date
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1; // Month is zero-indexed, so we add 1
+  var day = date.getDate();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+
+
   return (
     <View style={styles.container}>
       {/* Display basic details */}
+      <Text style={styles.text}>Date: {month}/{day}/{year} {hours}:{minutes}:{seconds}</Text>
       <Text style={styles.text}>Calories: {label.calories}</Text>
       <Text style={styles.text}>Total Fat: {label.total_fat}</Text>
       <Text style={styles.text}>Total Carbs: {label.total_carbs}</Text>
       <Text style={styles.text}>Protein: {label.protein}</Text>
+      <Text style={styles.text}>Total Sugars: {label.total_sugars}</Text>
 
       {/* Button to show all details */}
       <Button
@@ -39,17 +53,13 @@ const NutritionLabel = ({ label, onRemove }) => {
       {/* Conditionally render all details based on state */}
       {showAllDetails && (
         <>
-            <Text style={styles.text}>Servings Per Container: {label.servings_per_container}</Text>
-            <Text style={styles.text}>Serving Size: {label.serving_size}</Text>
             <Text style={styles.text}>Saturated Fat: {label.saturated_fat}</Text>
             <Text style={styles.text}>Trans Fat: {label.trans_fat}</Text>
             <Text style={styles.text}>Cholesterol: {label.cholesterol}</Text>
             <Text style={styles.text}>Sodium: {label.sodium}</Text>
             <Text style={styles.text}>Dietary Fiber: {label.dietary_fiber}</Text>
-            <Text style={styles.text}>Total Sugars: {label.total_sugars}</Text>
             {/* Special Nutrients Section */}
             <Text style={styles.text}>Special Nutrients:</Text>
-            <Text style={styles.text}>  Vitamin D: {label.special_nutrients.vitamin_d}</Text>
             <Text style={styles.text}>  Calcium: {label.special_nutrients.calcium}</Text>
             <Text style={styles.text}>  Iron: {label.special_nutrients.iron}</Text>
             <Text style={styles.text}>  Potassium: {label.special_nutrients.potassium}</Text>

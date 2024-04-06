@@ -36,7 +36,7 @@ const NLView = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={labels}
+        data={labels.reverse()}
         renderItem={({ item }) => (
           <NutritionLabel label={item} onRemove={() => removeLabel(item)} />
         )}
