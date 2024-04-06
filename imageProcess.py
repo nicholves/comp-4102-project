@@ -53,9 +53,9 @@ def cropImage(image, crop):
         return None
 
 def processImage(image):
-    # resize image to 480 pixels
-    width_ratio = 3000 / image.shape[1]
-    width = 3000
+    # resize image to 1000 pixels
+    width_ratio = 1000 / image.shape[1]
+    width = 1000
     height = int(image.shape[0] * width_ratio)
     image = cv2.resize(image, (width, height))
     
