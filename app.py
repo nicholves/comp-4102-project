@@ -4,7 +4,7 @@ from flask_cors import CORS
 from skimage import io
 import cv2
 
-import imageProcess
+import components.imageProcess as imageProcess
 
 app = Flask(__name__)
 CORS(app)
@@ -24,40 +24,30 @@ def upload():
         return "Image with name 'image' not included", 400
     file = request.files['image']
     
-    # If the client does not select a file, the browser submits an
-    # empty file without a filename.
     if file and file.filename == '' or not allowed_file(file.filename):
-        return "file is invalid", 400    
+        return "file is invalid", 400  # Check if the file is valid 
 
-    # read the image
-    image = io.imread(file)
+    image = io.imread(file)  # read the image file
+    nutrition_label, success = imageProcess.processImage(image)  # process the image
     
-    # rotate the image if width > height
-    if image.shape[1] > image.shape[0]:
-        image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
-    
-    nutrition_label, success = imageProcess.processImage(image)
-    
-    if not success:
+    if not success:  # if the image processing failed
         response = app.response_class(
             response=json.dumps({"error": "Failed to process image"}),
             status=500,
-            mimetype='application/json'
-        )
+            mimetype='application/json')
         return response
     
-    if nutrition_label is None:
+    if nutrition_label is None:  # if the nutrition label was not found
         response = app.response_class(
             response=json.dumps({"error": "Nutrition Label Not Found"}),
             status=200,
-            mimetype='application/json'
-        )
+            mimetype='application/json')
         return response
     
-    # set response content type to json
+    # return the nutrition label details as a JSON response
     response = app.response_class(
-        response=json.dumps(nutrition_label.toDict()),
+        response=json.dumps(nutrition_label),
         status=200,
-        mimetype='application/json'
-    )
+        mimetype='application/json')
+    
     return response

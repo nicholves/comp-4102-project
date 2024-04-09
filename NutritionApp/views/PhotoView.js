@@ -9,6 +9,7 @@ import placeholder from './../assets/images/camera.jpg';
 import { saveLabel } from './../storage/importExport';
 
 const FormData = global.FormData;
+const SERVER_URL = require('./../config.json').serverURL;  // Get Server URL from JSON
 
 const PhotoView = () => {
   const [image, setImage] = useState();
@@ -83,7 +84,7 @@ const PhotoView = () => {
     };
 
     try {
-      const response = await axios.post('https://a7fb-174-115-203-162.ngrok-free.app/upload', formData, config);
+      const response = await axios.post(`${SERVER_URL}/upload`, formData, config);
       
       // check if response is valid
       if (response.status !== 200) {
@@ -112,7 +113,7 @@ const PhotoView = () => {
     <View style={{justifyContent: 'center', alignItems: 'center' }}>
       {/* Display the Image they Uploaded */}
       <Image 
-        style={{ width: 350, height: 350*1.5, marginBottom: 10 }}
+        style={{ width: 250, height: 250*1.5, marginBottom: 10 }}
         source={image ? { uri: image } : placeholder}
       />
       <View style={{ flexDirection: 'row', marginBottom: 10}}>

@@ -25,19 +25,10 @@ const NutritionLabel = ({ label, onRemove }) => {
   // Create a new Date object using the timestamp
   var date = new Date(label.date);
 
-  // Now, you can access various components of the date
-  var year = date.getFullYear();
-  var month = date.getMonth() + 1; // Month is zero-indexed, so we add 1
-  var day = date.getDate();
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var seconds = date.getSeconds();
-
-
   return (
     <View style={styles.container}>
-      {/* Display basic details */}
-      <Text style={styles.text}>Date: {month}/{day}/{year} {hours}:{minutes}:{seconds}</Text>
+      {/* Display basic details and format the minutes and seconds */}
+      <Text style={styles.text}>Date: {date.toDateString() + ' ' + date.toLocaleTimeString()}</Text>
       <Text style={styles.text}>Calories: {label.calories}</Text>
       <Text style={styles.text}>Total Fat: {label.total_fat}</Text>
       <Text style={styles.text}>Total Carbs: {label.total_carbs}</Text>
