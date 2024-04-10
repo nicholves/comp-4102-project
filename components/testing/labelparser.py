@@ -61,8 +61,12 @@ class NutritionLabel ():
 nutrientSize = 13
   
 def replace_decimal(text):
-    pattern = r"\s+\.\s+(\d+)"  # Capture the digit separately
+    pattern = r"\s+\.(\d+)"  # Capture the digit separately
     replacement = lambda match: f" 0.{match.group(1)}"  # Use only the captured digit
+    
+    # if a decimal is followed by a space and then a digit remove the space
+    text = re.sub(r"\. (\d+)", r".\1", text)
+    
     return re.sub(pattern, replacement, text)
 
 def fix_grams(text):
@@ -75,6 +79,7 @@ def remove_percent(text):
     return re.sub(pattern, "", text)
 
 def clean_text(text):
+    # Replace all commas with periods  
     pattern = r"[^a-zA-Z0-9\.\n\s]"
     text = re.sub(pattern, "", text)
     pattern = r" +"
@@ -98,6 +103,8 @@ def remove_non_numeric(text):
 
 def process_text(text):
     new_text = text.lower()
+    new_text = re.sub(r"(\d+),(\d+)", r"\1.\2", new_text)
+    
     new_text = remove_before_calorie(new_text)
     new_text = replace_decimal(new_text)
     new_text = remove_percent(new_text)
@@ -114,22 +121,31 @@ def parseNutritionLabel(nl_processed):
         
         # split the text into lines and strip whitespace
         lines = [line.strip() for line in nl_processed.split('\n')]
-
+        
         nutrients = {
             "calo": "calories",
+            "ries": "calories",
+            "lipides": "total_fat",
             "fat": "total_fat",
             "sat": "saturated_fat",
             "tran": "trans_fat",
             "carb": "total_carbs",
+            "gluc": "total_carbs",
             "fib": "dietary_fiber",
             "flb": "dietary_fiber", # i has been mistaken for l
             "sug": "total_sugars",
+            "sucre": "total_sugars",
             "prot": "protein",
             "chol": "cholesterol",
+            "olest": "cholesterol",
             "sod": "sodium",
+            "odium": "sodium",
             "pot": "potassium",
-            "calc": "calcium",
-            "ron": "iron"
+            "assium": "potassium",
+            "cal": "calcium",
+            "lcium": "calcium",
+            "ron": "iron",
+            "fer": "iron"
         }
             
         nlDict = {}
@@ -150,7 +166,7 @@ def parseNutritionLabel(nl_processed):
                     
                     # check if the unit is in the next index
                     unit = None
-                    if index + 1 < len(temp) and temp[index + 1] == "mg":
+                    if index + 1 < len(temp) and temp[index + 1].startswith("m"):
                         unit = temp[index + 1]
                     
                     if len(value) == 0:
@@ -160,7 +176,7 @@ def parseNutritionLabel(nl_processed):
                     nutrients.pop(nutrient)
                     break
         
-        if found < 4:  # if it doesn't find at least 4 nutrients, we can't be sure it's a nutrition label
+        if found == 0:
             print("Not enough nutrients found")
             return None
         return NutritionLabel(nlDict)
@@ -177,6 +193,6 @@ def is_float(s):
         return False
     
 def convertToGrams(value, unit):
-    if unit and unit == "mg":
+    if unit and str(unit).startswith("m"):
         return value / 1000
     return value
