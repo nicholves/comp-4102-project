@@ -64,13 +64,15 @@ def processImageHelper(image, rotate):
         
         # Run model on rotated and original image and return the better one
         output, success = labelML.runModel(copyImage)
-        if rotate and output.shape[1] > output.shape[0]:
-            output = cv2.rotate(output, cv2.ROTATE_90_CLOCKWISE)
         
         if not success:
             return None, False
         if output is None:
             return None, True
+        
+        if rotate and output.shape[1] > output.shape[0]:
+            output = cv2.rotate(output, cv2.ROTATE_90_CLOCKWISE)
+        
         
         # Use OCR to extract text from nutrition label
         nl_processed = fullocr.extractText(output)
