@@ -13,12 +13,14 @@ const App = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" />
-      <View style={{ justifyContent: 'top', alignItems: 'center' }}>
-        <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 20 }}>Nutrition App</Text>
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 20 }}>Nutrition App</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%', marginBottom: 20 }}>
+          <Button title="Photo View" onPress={() => handleViewChange('PhotoView')} />
+          <Button title="NL View" onPress={() => handleViewChange('NLView')} />
+        </View>
       </View>
-      <View style={{ flex: 1, alignItems: 'center' }}>
-        <Button title="Photo View" onPress={() => handleViewChange('PhotoView')} />
-        <Button title="NL View" onPress={() => handleViewChange('NLView')} />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {currentView === 'PhotoView' && <PhotoView />}
         {currentView === 'NLView' && <NLView />}
       </View>
