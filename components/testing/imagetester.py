@@ -18,9 +18,16 @@ def main(path):
         if not success:
             print("processing failed altogether")
             continue
+        
+        count = 0
+        for key in nutLabel:
+            if nutLabel[key] != None:
+                count += 1
 
-        f = open(join(path, "results\\" + file.split(".")[0] + ".txt"), "w")
-        f.write(str(nutLabel))
+        f = open(join(path, "results\\" + file.split(".")[0] + ".json"), "w")
+        
+        dict = {"file": file, "count": count, "label": nutLabel}
+        f.write(str(dict).replace("'", "\""))
         f.close()
 
 

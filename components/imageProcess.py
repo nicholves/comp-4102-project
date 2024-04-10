@@ -32,11 +32,11 @@ def processImage(image):
     height = int(image.shape[0] * width_ratio)
     image = cv2.resize(image, (width, height))
     
-    rotated, success = processImageHelper(image, True)
+    rotated, success = processImageHelper(image, rotate=True)
     if rotated is not None:
         return rotated, success
 
-    return processImageHelper(image, False)
+    return processImageHelper(image, rotate=False)
     
 
 def processImageHelper(image, rotate):
@@ -60,9 +60,12 @@ def processImageHelper(image, rotate):
         # Rotate image if necessary
         if rotate:
             copyImage = fullocr.rotateImageHough(copyImage)
+            # show the image
         
         # Run model on rotated and original image and return the better one
         output, success = labelML.runModel(copyImage)
+        if rotate and output.shape[1] > output.shape[0]:
+            output = cv2.rotate(output, cv2.ROTATE_90_CLOCKWISE)
         
         if not success:
             return None, False
