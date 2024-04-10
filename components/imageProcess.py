@@ -4,9 +4,9 @@ import matplotlib.image as mpimg # reading images
 from skimage.color import rgb2gray # converting rgb images to grayscale
 import cv2
 
-import fullocr as fullocr
-import labelparser as lp
-import labelML as labelML
+import components.fullocr as fullocr
+import components.labelparser as lp
+import components.labelML as labelML
 
 def processImage(image):
     """
