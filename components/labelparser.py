@@ -161,11 +161,12 @@ def parseNutritionLabel(nl_processed):
                     break
         
         if found < 4:  # if it doesn't find at least 4 nutrients, we can't be sure it's a nutrition label
+            print("Not enough nutrients found")
             return None
         return NutritionLabel(nlDict)
     except Exception as e:
         # Handle any potential errors
-        print(f"An error occurred in label parser: {e}")
+        print(f"An error occurred in while parsing the label: {e}")
         return None
 
 def is_float(s):

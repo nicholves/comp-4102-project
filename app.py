@@ -8,7 +8,7 @@ import components.imageProcess as imageProcess
 
 app = Flask(__name__)
 CORS(app)
-app.config['MAX_CONTENT_LENGTH'] = 25 * 1000 * 1000
+app.config['MAX_CONTENT_LENGTH'] = 25 * 1000 * 1000  # 25 MB limit for image size
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 def allowed_file(filename):
@@ -31,6 +31,7 @@ def upload():
     nutrition_label, success = imageProcess.processImage(image)  # process the image
     
     if not success:  # if the image processing failed
+        print("ERROR: Failed to process image")
         response = app.response_class(
             response=json.dumps({"error": "Failed to process image"}),
             status=500,
@@ -38,6 +39,7 @@ def upload():
         return response
     
     if nutrition_label is None:  # if the nutrition label was not found
+        print("ERROR: Nutrition Label Not Found")
         response = app.response_class(
             response=json.dumps({"error": "Nutrition Label Not Found"}),
             status=200,
@@ -45,6 +47,7 @@ def upload():
         return response
     
     # return the nutrition label details as a JSON response
+    print("SUCCESS: Nutrition Label Found")
     response = app.response_class(
         response=json.dumps(nutrition_label),
         status=200,

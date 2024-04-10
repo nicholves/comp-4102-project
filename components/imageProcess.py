@@ -4,9 +4,9 @@ import matplotlib.image as mpimg # reading images
 from skimage.color import rgb2gray # converting rgb images to grayscale
 import cv2
 
-import components.fullocr as fullocr
-import components.labelparser as lp
-import components.labelML as labelML
+import fullocr as fullocr
+import labelparser as lp
+import labelML as labelML
 
 def processImage(image):
     """
@@ -71,10 +71,14 @@ def processImageHelper(image, rotate):
         
         # Use OCR to extract text from nutrition label
         nl_processed = fullocr.extractText(output)
+        if(nl_processed is None):
+            print("No text extracted from OCR")
+            return None, True
         
         # parse both nutrition label and processed nutrition label and return better one
         label = lp.parseNutritionLabel(nl_processed)
         if label is None:
+            print("Failed to parse nutrition label")
             return None, True
 
         return label.toDict(), True

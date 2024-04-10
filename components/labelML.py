@@ -33,7 +33,7 @@ def cropImage(image, crop):
         return cropped_image
     except Exception as e:
         # Handle any potential errors
-        print(f"An error occurred cropping: {e}")
+        print(f"An error occurred during cropping: {e}")
         return None
 
 def runModel(image):
@@ -44,11 +44,13 @@ def runModel(image):
 
         # if there are no detections, return None and False
         if results.pandas().xyxy[0].empty:
+            print("No detections found")
             return None, True
         
         # Get the first result and 
         crop = cropImage(image, results.crop(save=False)[0])
         if crop is None:
+            print("Failed to crop image")
             return None, False
         
         return crop, True

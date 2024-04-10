@@ -76,6 +76,10 @@ def extractText(label):
             nl_processed: The extracted text from the label image
         """        
         
+        if(label is None):
+            print("No label found")
+            return None
+        
         preProcessedLabel = preProcess(label)
         nl_processed = pytesseract.image_to_string(preProcessedLabel, lang='eng')
         return nl_processed
