@@ -1,4 +1,4 @@
-# Comp-4102-project - Nutrition Label Scanner (REST API and App)
+# Comp-4102-project - Nutrition Label Scanner (REST API and Client)
 
 ## Installation
 
@@ -32,7 +32,7 @@ Take that address and paste it as the value of the serverURL in the NutritionApp
 }
 ```
 
-To start expo client on mobile or add the `--web` flag to run locally on the web
+To start expo client on mobile or add the `--android` flag to run locally on an Android emulator (*Requires Android Studio)
 ```bash
 npx expo start
 ```
