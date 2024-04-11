@@ -21,10 +21,12 @@ def upload():
     
     # check if the post request has the image
     if 'image' not in request.files:
+        print("ERROR: Image with name 'image' not included")
         return "Image with name 'image' not included", 400
     file = request.files['image']
     
     if file and file.filename == '' or not allowed_file(file.filename):
+        print("ERROR: File is invalid")
         return "file is invalid", 400  # Check if the file is valid 
 
     image = io.imread(file)  # read the image file
