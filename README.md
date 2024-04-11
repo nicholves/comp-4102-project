@@ -40,5 +40,5 @@ npx expo start
 
 ## Using the APP
 The Nutrition App takes images from both uploads via the User's Camera Roll or Camera.
-The user can choose to get and save the Nutritional Facts for the image or clear and get the facts for a new Image.
-The Data for the nutrition Label is stored with the Date and can be accessed by clicking the History
+The user can get and save the Nutritional Facts for the image or clear and get the facts for a new Image.
+The Data for the nutrition Label is stored with the Date and can be accessed by clicking the History Button
