@@ -30,10 +30,10 @@ const NutritionLabel = ({ label, onRemove }) => {
       {/* Display basic details and format the minutes and seconds */}
       <Text style={styles.text}>Date: {date.toDateString() + ' ' + date.toLocaleTimeString()}</Text>
       <Text style={styles.text}>Calories: {label.calories}</Text>
-      <Text style={styles.text}>Total Fat: {label.total_fat}</Text>
-      <Text style={styles.text}>Total Carbs: {label.total_carbs}</Text>
-      <Text style={styles.text}>Protein: {label.protein}</Text>
-      <Text style={styles.text}>Total Sugars: {label.total_sugars}</Text>
+      <Text style={styles.text}>Total Fat: {label.total_fat} g</Text>
+      <Text style={styles.text}>Total Carbs: {label.total_carbs} g</Text>
+      <Text style={styles.text}>Protein: {label.protein} g</Text>
+      <Text style={styles.text}>Total Sugars: {label.total_sugars} g</Text>
 
       {/* Button to show all details */}
       <Button
@@ -44,16 +44,16 @@ const NutritionLabel = ({ label, onRemove }) => {
       {/* Conditionally render all details based on state */}
       {showAllDetails && (
         <>
-            <Text style={styles.text}>Saturated Fat: {label.saturated_fat}</Text>
-            <Text style={styles.text}>Trans Fat: {label.trans_fat}</Text>
-            <Text style={styles.text}>Cholesterol: {label.cholesterol}</Text>
-            <Text style={styles.text}>Sodium: {label.sodium}</Text>
-            <Text style={styles.text}>Dietary Fiber: {label.dietary_fiber}</Text>
+            <Text style={styles.text}>Saturated Fat: {label.saturated_fat} g</Text>
+            <Text style={styles.text}>Trans Fat: {label.trans_fat} g</Text>
+            <Text style={styles.text}>Cholesterol: {label.cholesterol} g</Text>
+            <Text style={styles.text}>Sodium: {label.sodium} g</Text>
+            <Text style={styles.text}>Dietary Fiber: {label.dietary_fiber} g</Text>
             {/* Special Nutrients Section */}
             <Text style={styles.text}>Special Nutrients:</Text>
-            <Text style={styles.text}>  Calcium: {label.special_nutrients.calcium}</Text>
-            <Text style={styles.text}>  Iron: {label.special_nutrients.iron}</Text>
-            <Text style={styles.text}>  Potassium: {label.special_nutrients.potassium}</Text>
+            <Text style={styles.text}>  Calcium: {label.special_nutrients.calcium} g</Text>
+            <Text style={styles.text}>  Iron: {label.special_nutrients.iron} g</Text>
+            <Text style={styles.text}>  Potassium: {label.special_nutrients.potassium} g</Text>
         </>
         )}
     

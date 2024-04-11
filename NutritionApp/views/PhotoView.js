@@ -121,6 +121,7 @@ const PhotoView = () => {
         <Button title={"Upload Photo\n(Camera Roll)"} onPress={uploadPhoto} />
       </View>
       <Button title="Clear" onPress={() => setImage(null)} />
+      <View style={{ marginBottom: 10 }} />
       <Button title="Get Nutrition Facts" onPress={fetchNutritionFacts} disabled={!image} />
     </View>
   );
