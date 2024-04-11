@@ -11,18 +11,20 @@ const App = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
+      <Text style={styles.title}>Nutrition App</Text>
+
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 20, fontWeight: 'bold', marginVertical: 20 }}>Nutrition App</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%', marginBottom: 20 }}>
-          <Button title="Photo View" onPress={() => handleViewChange('PhotoView')} />
-          <Button title="NL View" onPress={() => handleViewChange('NLView')} />
+          <Button style={styles.button} title="Photo View" onPress={() => handleViewChange('PhotoView')} />
+          <Button style={styles.button} title="History" onPress={() => handleViewChange('History')} />
         </View>
       </View>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         {currentView === 'PhotoView' && <PhotoView />}
-        {currentView === 'NLView' && <NLView />}
+        {currentView === 'History' && <NLView />}
       </View>
     </SafeAreaView>
   );
@@ -32,10 +34,16 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 20,
+  },
+  button: {
+    
+  }
 });
 
 export default App;
