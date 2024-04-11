@@ -1,4 +1,4 @@
-# Comp-4102-project
+# Comp-4102-project - Nutrition Label Scanner (REST API and App)
 
 ## Installation
 
