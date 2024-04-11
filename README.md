@@ -13,9 +13,7 @@ To set up some things either run the setup.ps1 script or setup.sh
 ./setup.ps1
 ```
 
-To run OCR for this project, Tesseract OCR by Google is required. To install, follow the Instructions linked here
-
-[Tesseract OCR Install](https://tesseract-ocr.github.io/tessdoc/Installation.html)
+To run OCR for this project, Tesseract OCR by Google is required. To install, follow the Instructions linked here [Tesseract OCR Install](https://tesseract-ocr.github.io/tessdoc/Installation.html)
 
 To run flask server you can use, replace #.#.#.# with IPv4 Address of computer on your local network or 0.0.0.0 to run on all your computer networks
 > You can find your local IPv4 Address using shell command
