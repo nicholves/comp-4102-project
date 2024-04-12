@@ -8,9 +8,9 @@ pip install -r .\requirements.txt
 ```
 *You need to have pip installed to PATH*
 
-To set up some things either run the setup.ps1 script or setup.sh
+To set up the git submodules run
 ```bash
-./setup.ps1
+git submodule update --init
 ```
 
 To run OCR for this project, Tesseract OCR by Google is required. To install, follow the Instructions linked here [Tesseract OCR Install](https://tesseract-ocr.github.io/tessdoc/Installation.html)
