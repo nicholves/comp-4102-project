@@ -17,8 +17,9 @@ To run OCR for this project, Tesseract OCR by Google is required. To install, fo
 
 To run flask server you can use, replace #.#.#.# with IPv4 Address of computer on your local network or 0.0.0.0 to run on all your computer networks
 > You can find your local IPv4 Address using shell command
-> `ipconfig` and local for the network your using. 
-
+> `ipconfig` and local for the network your using.
+> 
+> *Make sure this is a network address, not your local address (E.g. NOT localhost or 127.#.#.#)*
 ```bash
 flask run --host=#.#.#.#.
 ```
@@ -41,7 +42,7 @@ In a new terminal, open the NutrtionApp/ directory, and then start the expo clie
 npm install
 npx expo start
 ```
-*You need to have npm and expo installed and your mobile device must be connected to the same network as the computer running the server.*
+*You need to have npm and expo installed and your mobile device must be connected to the **exact** same network as the computer running the server.*
 
 ## Using the APP
 The Nutrition App takes images from both uploads via the User's Camera Roll or Camera.
