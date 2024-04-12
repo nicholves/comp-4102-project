@@ -36,11 +36,12 @@ Take that address and paste it as the value of the serverURL in the NutritionApp
 
 You need to download the Expo Go App to run a mobile app on your mobile device. This can be downloaded Here [Google Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_CA&gl=US) or [Apple App Store](https://apps.apple.com/us/app/expo-go/id982107779)
 
-To start expo client on mobile or add the `--android` flag to run locally on an Android emulator (*Requires Android Studio)
+In a new terminal, open the NutrtionApp/ directory, and then start the expo client on mobile or add the `--android` flag to run locally on an Android emulator (*Requires Android Studio) by running these commands individually.
 ```bash
+npm install
 npx expo start
 ```
-*You need to have npm and expo installed*
+*You need to have npm and expo installed and your mobile device must be connected to the same network as the computer running the server.*
 
 ## Using the APP
 The Nutrition App takes images from both uploads via the User's Camera Roll or Camera.
