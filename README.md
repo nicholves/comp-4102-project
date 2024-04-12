@@ -21,7 +21,7 @@ To run flask server you can use, replace #.#.#.# with IPv4 Address of computer o
 > 
 > *Make sure this is a network address, not your local address (E.g. NOT localhost or 127.#.#.#)*
 ```bash
-flask run --host=#.#.#.#.
+flask run --host=#.#.#.#
 ```
 *You need to have flask installed to path - [Flask Install](https://flask.palletsprojects.com/en/3.0.x/installation/)*
 
