@@ -1,5 +1,14 @@
 # Comp-4102-project - Nutrition Label Scanner (REST API and Client)
 
+## Description
+This project is a Python Flask Server Application that processes images that contain nutrition labels and returns the
+information in a digital JSON format using AI, Computer Vision, and String Processing techniques. 
+It also includes a testing client mobile application that makes requests to the server and stores the scanned Nutrition Label Data.
+The application is user-friendly, taking the user’s image as input and processing it in a server. Rotation angle detection is used on the image, the nutrition label is then detected
+and cropped using the YOLOv5 AI model. Following the detection, some filters are applied so that they can
+be in an optimal format for Google's Tesseract OCR engine, which extracts text from the image. The text is then
+parsed and necessary edits are applied before being sent back to the user.
+
 ## Installation
 
 To install the required Python libraries, run the following command from the root directory:
