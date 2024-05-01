@@ -9,6 +9,8 @@ and cropped using the YOLOv5 AI model. Following the detection, some filters are
 be in an optimal format for Google's Tesseract OCR engine, which extracts text from the image. The text is then
 parsed and necessary edits are applied before being sent back to the user.
 
+**[Video Demo](https://www.youtube.com/watch?v=M0eLR9PD3BY)**
+
 ## Installation
 
 To install the required Python libraries, run the following command from the root directory:
